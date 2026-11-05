@@ -39,8 +39,10 @@ class FdnReverb {
     // Householder: x - (2/N) * sum(x).
     const float h = sum * (2.0f / kLines);
     for (int i = 0; i < kLines; ++i) {
-      lp_[i] = dm::flush(lp_[i] + (v[i] - lp_[i]) * damping_);
-      line_[i][pos_[i]] = dm::flush((lp_[i] - h) * feedback_ + in);
+      // Damp after the matrix: the matrix is unitary and the filter never adds
+      // gain, so with feedback below 1 the loop cannot grow.
+      lp_[i] = dm::flush(lp_[i] + ((v[i] - h) - lp_[i]) * damping_);
+      line_[i][pos_[i]] = dm::flush(lp_[i] * feedback_ + in);
       if (++pos_[i] == len_[i]) pos_[i] = 0;
     }
     outL = (v[0] - v[2] + v[4] - v[6]) * 0.35f;
