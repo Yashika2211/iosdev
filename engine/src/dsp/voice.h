@@ -47,7 +47,6 @@ class Voice {
     active_ = true;
 
     const float hz = dm::midiToHz(static_cast<float>(note));
-    baseHz_ = hz;
     osc1_.setWaveform(patch.wave1);
     osc2_.setWaveform(patch.wave2);
     osc1_.setFrequency(hz, sampleRate_);
@@ -105,7 +104,7 @@ class Voice {
   Svf filter_;
   Adsr amp_, filt_;
   Lfo lfo_;
-  float sampleRate_ = 48000.0f, velocity_ = 0.0f, baseHz_ = 440.0f;
+  float sampleRate_ = 48000.0f, velocity_ = 0.0f;
   uint64_t order_ = 0;
   uint8_t note_ = 0;
   bool gate_ = false, active_ = false;
