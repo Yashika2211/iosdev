@@ -357,10 +357,15 @@ void Engine::render(float* left, float* right, uint32_t frames) {
   m.drainInbox();
   uint32_t done = 0;
   while (done < frames) {
-    m.applyDue();
-    m.fireSteps();
-    // fireSteps can schedule a note-off that is already due at this sample.
-    m.applyDue();
+    // Settle everything due at this sample. A step can schedule a note-off that
+    // is already due, and a tempo event can move the next step onto this
+    // sample, so repeat until a pass changes nothing.
+    for (;;) {
+      m.applyDue();
+      const int64_t stepBefore = m.nextStep;
+      m.fireSteps();
+      if (m.nextStep == stepBefore) break;
+    }
     const uint64_t interval = Voice::kControlInterval;
     if (m.pos % interval == 0) m.control();
 
