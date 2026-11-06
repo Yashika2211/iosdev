@@ -12,10 +12,11 @@ target_compile_options(jam_engine PRIVATE -Wall -Wextra -Wpedantic -fno-exceptio
 
 if(JAM_BUILD_TESTS)
   include(FetchContent)
+  # A release archive rather than a git clone: faster, and it cannot hang on a
+  # stalled shallow fetch.
   FetchContent_Declare(Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v3.7.1
-    GIT_SHALLOW TRUE)
+    URL https://github.com/catchorg/Catch2/archive/refs/tags/v3.7.1.tar.gz
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
   FetchContent_MakeAvailable(Catch2)
 
   add_executable(jam_tests
