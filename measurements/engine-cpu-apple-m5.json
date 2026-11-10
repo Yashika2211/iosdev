@@ -1,0 +1,46 @@
+{
+  "what": "Engine CPU cost per voice: extra render time of N sustained voices over an idle engine, best of 5 runs, single thread, native Release build",
+  "measured_on": {
+    "date": "2026-11-10",
+    "cpu": "Apple M5",
+    "macos": "26.5.2",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+    "engine_commit": "f299965"
+  },
+  "command": "build/engine/jam_bench",
+  "sample_rate": 48000,
+  "block": 128,
+  "seconds": 20,
+  "repeats": 5,
+  "idle_percent_of_core": 0.1186,
+  "results": [
+    {
+      "instrument": "lead",
+      "voices": 8,
+      "total_percent_of_core": 0.6957,
+      "percent_per_voice": 0.07214,
+      "ns_per_voice_sample": 15.03
+    },
+    {
+      "instrument": "lead",
+      "voices": 32,
+      "total_percent_of_core": 2.3045,
+      "percent_per_voice": 0.06831,
+      "ns_per_voice_sample": 14.23
+    },
+    {
+      "instrument": "pads",
+      "voices": 8,
+      "total_percent_of_core": 0.6528,
+      "percent_per_voice": 0.06677,
+      "ns_per_voice_sample": 13.91
+    },
+    {
+      "instrument": "pads",
+      "voices": 32,
+      "total_percent_of_core": 2.2621,
+      "percent_per_voice": 0.06698,
+      "ns_per_voice_sample": 13.96
+    }
+  ]
+}
