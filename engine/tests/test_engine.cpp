@@ -85,8 +85,11 @@ uint64_t renderHash(uint32_t blockSize, uint32_t sr = 48000, uint32_t seconds = 
   while (remaining > 0) {
     const uint32_t n = std::min(blockSize, remaining);
     engine->render(l.data(), r.data(), n);
-    h = fnv(h, l.data(), n);
-    h = fnv(h, r.data(), n);
+    // Hash frame by frame (L then R), so the hash itself can't depend on block size.
+    for (uint32_t i = 0; i < n; ++i) {
+      h = fnv(h, &l[i], 1);
+      h = fnv(h, &r[i], 1);
+    }
     remaining -= n;
   }
   return h;
