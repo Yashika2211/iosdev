@@ -8,3 +8,5 @@ ios/*.xcodeproj
 ios/build/
 DerivedData/
 web/public/jam.wasm
+web/test-results/
+web/playwright-report/
