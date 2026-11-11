@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Jam</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Jam</h1>
+      <button id="start" type="button">Tap to start audio</button>
+      <section id="play" hidden>
+        <label>Instrument
+          <select id="instrument">
+            <option value="0">Synth lead</option>
+            <option value="1">Bass</option>
+            <option value="2">Drums</option>
+            <option value="3">Pads</option>
+          </select>
+        </label>
+        <div id="pads" class="pads"></div>
+        <pre id="stats" class="stats"></pre>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
