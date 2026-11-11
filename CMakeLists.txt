@@ -13,3 +13,7 @@ endif()
 option(JAM_BUILD_TESTS "Build tests, benchmarks and tools" ON)
 
 add_subdirectory(engine)
+
+if(EMSCRIPTEN)
+  add_subdirectory(web/wasm)
+endif()
