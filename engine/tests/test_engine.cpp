@@ -9,6 +9,7 @@
 
 #include "core/rng.h"
 #include "jam/engine.h"
+#include "golden.h"
 
 using namespace jam;
 
@@ -32,68 +33,11 @@ void operator delete[](void* p, std::size_t) noexcept { std::free(p); }
 
 namespace {
 
+using golden::makeEvent;
 Event ev(int64_t tick, uint32_t seq, EventType type, uint8_t player, uint8_t a = 0, uint8_t b = 0, uint16_t c = 0) {
-  Event e;
-  e.tick = tick;
-  e.seq = seq;
-  e.type = type;
-  e.player = player;
-  e.a = a;
-  e.b = b;
-  e.c = c;
-  return e;
+  return makeEvent(tick, seq, type, player, a, b, c);
 }
-
-// A varied scripted performance using every instrument and event type.
-std::vector<Event> script() {
-  std::vector<Event> out;
-  uint32_t seq = 0;
-  Rng rng(42);
-  for (int p = 0; p < kMaxPlayers; ++p) out.push_back(ev(0, seq++, EventType::SetInstrument, static_cast<uint8_t>(p), static_cast<uint8_t>(p % 4)));
-  for (int s = 0; s < 16; s += 4) out.push_back(ev(0, seq++, EventType::SeqStep, 2, static_cast<uint8_t>(s), 120, 0));
-  for (int s = 2; s < 16; s += 4) out.push_back(ev(0, seq++, EventType::SeqStep, 2, static_cast<uint8_t>(s), 90, 2));
-  for (int64_t tick = 0; tick < 960 * 16; tick += 120) {
-    const auto player = static_cast<uint8_t>(rng.next() % kMaxPlayers);
-    const auto note = static_cast<uint8_t>(36 + rng.next() % 48);
-    out.push_back(ev(tick, seq++, EventType::NoteOn, player, note, static_cast<uint8_t>(60 + rng.next() % 67)));
-    out.push_back(ev(tick + 200, seq++, EventType::NoteOff, player, note));
-    if (tick % 480 == 0) out.push_back(ev(tick, seq++, EventType::SetParam, player, 0, 0, static_cast<uint16_t>(rng.next())));
-  }
-  out.push_back(ev(960 * 8, seq++, EventType::Tempo, 0, 0, 0, 1400));
-  return out;
-}
-
-uint64_t fnv(uint64_t h, const float* x, size_t n) {
-  for (size_t i = 0; i < n; ++i) {
-    uint32_t bits;
-    std::memcpy(&bits, &x[i], 4);
-    for (int b = 0; b < 4; ++b) {
-      h ^= (bits >> (b * 8)) & 0xFF;
-      h *= 1099511628211ULL;
-    }
-  }
-  return h;
-}
-
-uint64_t renderHash(uint32_t blockSize, uint32_t sr = 48000, uint32_t seconds = 12) {
-  auto engine = std::make_unique<Engine>();
-  engine->prepare(sr);
-  for (const auto& e : script()) REQUIRE(engine->post(e));
-  std::vector<float> l(blockSize), r(blockSize);
-  uint64_t h = 14695981039346656037ULL;
-  uint32_t remaining = sr * seconds;
-  while (remaining > 0) {
-    const uint32_t n = std::min(blockSize, remaining);
-    engine->render(l.data(), r.data(), n);
-    // Hash frame by frame (L then R), so the hash itself can't depend on block size.
-    for (uint32_t i = 0; i < n; ++i) {
-      h = fnv(h, &l[i], 1);
-      h = fnv(h, &r[i], 1);
-    }
-    remaining -= n;
-  }
-  return h;
-}
+uint64_t renderHash(uint32_t blockSize) { return golden::renderHash(48000, blockSize); }
 
 }  // namespace
 
@@ -112,7 +56,7 @@ TEST_CASE("rendering is repeatable") {
 TEST_CASE("render never allocates") {
   auto engine = std::make_unique<Engine>();
   engine->prepare(48000);
-  auto events = script();
+  auto events = golden::script();
   std::vector<float> l(128), r(128);
   g_allocations = 0;
   g_armed = true;
@@ -211,4 +155,10 @@ TEST_CASE("random event streams never produce NaN or leave the output range") {
       REQUIRE(std::fabs(r[i]) <= 1.0f);
     }
   }
+}
+
+TEST_CASE("output matches the recorded golden hash") {
+  const uint64_t h = golden::renderHash(48000, 128);
+  INFO("hash 0x" << std::hex << h);
+  REQUIRE(h == golden::kGoldenHash48k);
 }
