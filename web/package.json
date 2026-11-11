@@ -1,0 +1,19 @@
+{
+  "name": "jam-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "wasm": "cd .. && emcmake cmake -S . -B build-wasm -G Ninja -DCMAKE_BUILD_TYPE=Release -DJAM_BUILD_TESTS=OFF && cmake --build build-wasm --target jam_wasm",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "playwright test --grep-invert @bench",
+    "bench": "playwright test --grep @bench --workers=1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
