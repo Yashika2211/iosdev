@@ -15,7 +15,7 @@ test('@bench wasm CPU per voice', async ({ page, browserName, browser }) => {
       date: new Date().toISOString().slice(0, 10),
       cpu: os.cpus()[0]?.model,
       os: `${os.type()} ${os.release()}`,
-      browser: `${browserName} ${browser.version()} (Playwright, headless)`,
+      browser: `${process.env.PW_CHROMIUM_CHANNEL && browserName === 'chromium' ? `${process.env.PW_CHROMIUM_CHANNEL} (installed)` : browserName} ${browser.version()}, headless, via Playwright`,
       engine_commit: execSync('git rev-parse --short HEAD').toString().trim(),
     },
     command: 'cd web && npm run bench',
