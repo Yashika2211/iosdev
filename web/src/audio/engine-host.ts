@@ -26,7 +26,7 @@ export class JamAudio {
   private readonly packed = new Int32Array(SLOT_WORDS);
   private seq = 1;
   private goldenWaiter: ((hash: string) => void) | null = null;
-  private portStats = new Float64Array(STAT_COUNT);
+  private portStats: Float64Array<ArrayBufferLike> = new Float64Array(STAT_COUNT);
 
   private constructor(
     readonly context: AudioContext,
