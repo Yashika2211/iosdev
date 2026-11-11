@@ -1,0 +1,46 @@
+{
+  "what": "Engine CPU cost per voice as wasm on the browser main thread: extra render time of N sustained voices over an idle engine, best of 5 runs",
+  "measured_on": {
+    "date": "2026-11-11",
+    "cpu": "Apple M5",
+    "os": "Darwin 25.5.0",
+    "browser": "chrome (installed) 157.0.8103.39, headless, via Playwright",
+    "engine_commit": "5dcf145"
+  },
+  "command": "cd web && npm run bench",
+  "sample_rate": 48000,
+  "block": 128,
+  "seconds": 10,
+  "repeats": 5,
+  "idle_percent_of_core": 0.12570000052452088,
+  "results": [
+    {
+      "instrument": "lead",
+      "voices": 8,
+      "totalPercentOfCore": 0.682849999666214,
+      "percentPerVoice": 0.06964374989271163,
+      "nsPerVoiceSample": 14.50911456098159
+    },
+    {
+      "instrument": "lead",
+      "voices": 32,
+      "totalPercentOfCore": 2.2924500000476837,
+      "percentPerVoice": 0.06771093748509885,
+      "nsPerVoiceSample": 14.10644530939559
+    },
+    {
+      "instrument": "pads",
+      "voices": 8,
+      "totalPercentOfCore": 0.6884000003337861,
+      "percentPerVoice": 0.07033749997615815,
+      "nsPerVoiceSample": 14.65364582836628
+    },
+    {
+      "instrument": "pads",
+      "voices": 32,
+      "totalPercentOfCore": 2.3648000001907348,
+      "percentPerVoice": 0.0699718749895692,
+      "nsPerVoiceSample": 14.577473956160247
+    }
+  ]
+}
