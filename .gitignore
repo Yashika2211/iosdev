@@ -7,3 +7,4 @@ web/dist/
 ios/*.xcodeproj
 ios/build/
 DerivedData/
+web/public/jam.wasm
