@@ -15,7 +15,12 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--autoplay-policy=no-user-gesture-required'] } },
+      use: {
+        ...devices['Desktop Chrome'],
+        // Set PW_CHROMIUM_CHANNEL=chrome to use an installed Google Chrome.
+        channel: process.env.PW_CHROMIUM_CHANNEL || undefined,
+        launchOptions: { args: ['--autoplay-policy=no-user-gesture-required'] },
+      },
     },
     { name: 'webkit', use: { ...devices['Desktop Safari'] } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
