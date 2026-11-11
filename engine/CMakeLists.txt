@@ -26,7 +26,7 @@ if(JAM_BUILD_TESTS)
     tests/test_seq.cpp
     tests/test_engine.cpp
   )
-  target_include_directories(jam_tests PRIVATE src)
+  target_include_directories(jam_tests PRIVATE src tools)
   target_link_libraries(jam_tests PRIVATE jam_engine Catch2::Catch2WithMain)
 
   add_executable(jam_bench bench/bench_voices.cpp)
