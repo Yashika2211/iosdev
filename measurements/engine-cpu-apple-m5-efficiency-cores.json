@@ -1,0 +1,49 @@
+{
+  "what": "Engine CPU cost per voice: extra render time of N sustained voices over an idle engine, best of 5 runs, single thread, native Release build",
+  "measured_on": {
+    "date": "2026-11-12",
+    "cpu": "Apple M5",
+    "cores": "efficiency cores (taskpolicy -b)",
+    "power": "AC Power",
+    "low_power_mode": false,
+    "macos": "26.5.2",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+    "engine_commit": "53edc3d"
+  },
+  "command": "python3 measurements/record_native_bench.py --efficiency-cores",
+  "sample_rate": 48000,
+  "block": 128,
+  "seconds": 20,
+  "repeats": 5,
+  "idle_percent_of_core": 0.2374,
+  "results": [
+    {
+      "instrument": "lead",
+      "voices": 8,
+      "total_percent_of_core": 1.1584,
+      "percent_per_voice": 0.11512,
+      "ns_per_voice_sample": 23.98
+    },
+    {
+      "instrument": "lead",
+      "voices": 32,
+      "total_percent_of_core": 4.6359,
+      "percent_per_voice": 0.13745,
+      "ns_per_voice_sample": 28.64
+    },
+    {
+      "instrument": "pads",
+      "voices": 8,
+      "total_percent_of_core": 1.6445,
+      "percent_per_voice": 0.17589,
+      "ns_per_voice_sample": 36.64
+    },
+    {
+      "instrument": "pads",
+      "voices": 32,
+      "total_percent_of_core": 6.4293,
+      "percent_per_voice": 0.1935,
+      "ns_per_voice_sample": 40.31
+    }
+  ]
+}
