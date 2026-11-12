@@ -16,6 +16,8 @@ test('@bench wasm CPU per voice', async ({ page, browserName, browser }) => {
       cpu: os.cpus()[0]?.model,
       os: `${os.type()} ${os.release()}`,
       browser: `${process.env.PW_CHROMIUM_CHANNEL && browserName === 'chromium' ? `${process.env.PW_CHROMIUM_CHANNEL} (installed)` : browserName} ${browser.version()}, headless, via Playwright`,
+      power: execSync(`pmset -g batt | head -1 | sed -E "s/.*'(.*)'.*/\\1/"`).toString().trim(),
+      low_power_mode: execSync("pmset -g | awk '/lowpowermode/ {print $2}'").toString().trim() === '1',
       engine_commit: execSync('git rev-parse --short HEAD').toString().trim(),
     },
     command: 'cd web && npm run bench',
