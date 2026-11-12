@@ -1,46 +1,49 @@
 {
   "what": "Engine CPU cost per voice: extra render time of N sustained voices over an idle engine, best of 5 runs, single thread, native Release build",
   "measured_on": {
-    "date": "2026-11-10",
+    "date": "2026-11-12",
     "cpu": "Apple M5",
+    "cores": "scheduler's choice at normal priority",
+    "power": "AC Power",
+    "low_power_mode": false,
     "macos": "26.5.2",
     "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
-    "engine_commit": "f299965"
+    "engine_commit": "53edc3d"
   },
-  "command": "build/engine/jam_bench",
+  "command": "python3 measurements/record_native_bench.py",
   "sample_rate": 48000,
   "block": 128,
   "seconds": 20,
   "repeats": 5,
-  "idle_percent_of_core": 0.1186,
+  "idle_percent_of_core": 0.0598,
   "results": [
     {
       "instrument": "lead",
       "voices": 8,
-      "total_percent_of_core": 0.6957,
-      "percent_per_voice": 0.07214,
-      "ns_per_voice_sample": 15.03
+      "total_percent_of_core": 0.3473,
+      "percent_per_voice": 0.03594,
+      "ns_per_voice_sample": 7.49
     },
     {
       "instrument": "lead",
       "voices": 32,
-      "total_percent_of_core": 2.3045,
-      "percent_per_voice": 0.06831,
-      "ns_per_voice_sample": 14.23
+      "total_percent_of_core": 1.161,
+      "percent_per_voice": 0.03441,
+      "ns_per_voice_sample": 7.17
     },
     {
       "instrument": "pads",
       "voices": 8,
-      "total_percent_of_core": 0.6528,
-      "percent_per_voice": 0.06677,
-      "ns_per_voice_sample": 13.91
+      "total_percent_of_core": 0.3323,
+      "percent_per_voice": 0.03406,
+      "ns_per_voice_sample": 7.1
     },
     {
       "instrument": "pads",
       "voices": 32,
-      "total_percent_of_core": 2.2621,
-      "percent_per_voice": 0.06698,
-      "ns_per_voice_sample": 13.96
+      "total_percent_of_core": 1.1556,
+      "percent_per_voice": 0.03424,
+      "ns_per_voice_sample": 7.13
     }
   ]
 }
