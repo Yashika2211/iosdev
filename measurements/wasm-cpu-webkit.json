@@ -5,42 +5,44 @@
     "cpu": "Apple M5",
     "os": "Darwin 25.5.0",
     "browser": "webkit 27.2, headless, via Playwright",
-    "engine_commit": "4ef63bd"
+    "power": "AC Power",
+    "low_power_mode": false,
+    "engine_commit": "53edc3d"
   },
   "command": "cd web && npm run bench",
   "sample_rate": 48000,
   "block": 128,
   "seconds": 10,
   "repeats": 5,
-  "idle_percent_of_core": 0.06159999999999996,
+  "idle_percent_of_core": 0.06379999999999994,
   "results": [
     {
       "instrument": "lead",
       "voices": 8,
-      "totalPercentOfCore": 0.3484000000000003,
-      "percentPerVoice": 0.03585000000000004,
-      "nsPerVoiceSample": 7.468750000000009
+      "totalPercentOfCore": 0.3495999999999998,
+      "percentPerVoice": 0.03572499999999998,
+      "nsPerVoiceSample": 7.442708333333329
     },
     {
       "instrument": "lead",
       "voices": 32,
-      "totalPercentOfCore": 1.1813999999999998,
-      "percentPerVoice": 0.03499374999999999,
-      "nsPerVoiceSample": 7.290364583333332
+      "totalPercentOfCore": 1.1807999999999992,
+      "percentPerVoice": 0.03490624999999998,
+      "nsPerVoiceSample": 7.272135416666662
     },
     {
       "instrument": "pads",
       "voices": 8,
-      "totalPercentOfCore": 0.3397999999999979,
-      "percentPerVoice": 0.034774999999999744,
-      "nsPerVoiceSample": 7.244791666666612
+      "totalPercentOfCore": 0.3416000000000008,
+      "percentPerVoice": 0.0347250000000001,
+      "nsPerVoiceSample": 7.234375000000021
     },
     {
       "instrument": "pads",
       "voices": 32,
-      "totalPercentOfCore": 1.1694000000000007,
-      "percentPerVoice": 0.03461875000000002,
-      "nsPerVoiceSample": 7.2122395833333375
+      "totalPercentOfCore": 1.1722000000000004,
+      "percentPerVoice": 0.03463750000000001,
+      "nsPerVoiceSample": 7.216145833333336
     }
   ]
 }
